@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="com.google.android.gms.maps.MapFragment"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/naviStart"
+            android:layout_width="150dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="30dp"
+            android:text="길 안내"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/naviBus"
+            android:layout_width="150dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="30dp"
+            android:text="버스"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/back1"
+        android:background="@drawable/back1" />
+    <EditText
+        android:id="@+id/IdInput"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:drawableLeft="@drawable/ic_person"
+        android:drawablePadding="10dp"
+        android:hint="아이디"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/passwordInput" />
+    <!-- 32x32 -->
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:drawableLeft="@drawable/ic_security"
+        android:drawablePadding="10dp"
+        android:id="@+id/passwordInput"
+        android:layout_centerHorizontal="true"
+        android:hint="비밀번호"
+        android:layout_below="@+id/IdInput"
+        android:inputType="textPassword"/>
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:text="로그인"
+        android:id="@+id/loginButton"
+        android:textAllCaps="false"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/passwordInput"
+        android:layout_toStartOf="@+id/signupButton" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="55dp"
+        android:text="회원가입"
+        android:id="@+id/signupButton"
+        android:textAllCaps="false"
+        android:layout_alignTop="@+id/loginButton"
+        android:layout_alignEnd="@+id/passwordInput" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그인 유지"
+        android:textColor="#FFFF00"
+        android:id="@+id/checkBox"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/loginButton"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
