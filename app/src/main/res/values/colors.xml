@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="amber500">#fec82f</color>
+    <color name="pink500">#ee3e77</color>
+    <color name="indigo500">#526bc0</color>
+    <color name="orange500">#fd6f38</color>
+    <color name="teal500">#18a399</color>
+    <color name="purple500">#ac49bb</color>
+
 </resources>

@@ -21,7 +21,6 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 finish();
-
             }
         },3000);
     }

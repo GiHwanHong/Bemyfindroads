@@ -14,7 +14,9 @@
         android:id="@+id/IdInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:theme="@style/EditTextStyle"
         android:drawableLeft="@drawable/ic_person"
+
         android:drawablePadding="10dp"
         android:hint="아이디"
         android:layout_centerVertical="true"
@@ -26,6 +28,7 @@
         android:drawableLeft="@drawable/ic_security"
         android:drawablePadding="10dp"
         android:id="@+id/passwordInput"
+        android:theme="@style/EditTextStyle"
         android:layout_centerHorizontal="true"
         android:hint="비밀번호"
         android:layout_below="@+id/IdInput"
