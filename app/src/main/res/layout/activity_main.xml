@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/back1"
-        android:background="@drawable/back1" />
+        android:background="@drawable/login" />
     <EditText
         android:id="@+id/IdInput"
         android:layout_width="300dp"

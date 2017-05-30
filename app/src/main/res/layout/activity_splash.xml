@@ -11,16 +11,4 @@
             android:background="@drawable/start"
             android:scaleType="centerInside"/>
     </LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Be My Find Roads"
-            android:gravity="center"
-            android:textSize="30dp"
-            android:layout_centerInParent="true"/>
-
-    </RelativeLayout>
 </LinearLayout>
