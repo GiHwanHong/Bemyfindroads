@@ -19,6 +19,7 @@
         android:padding="5dp"
         android:drawablePadding="10dp"
         android:hint="아이디"
+        android:textColor="#FFFFFF"
         android:layout_centerVertical="true"
         android:layout_alignStart="@+id/passwordInput" />
     <!-- 32x32 -->
@@ -28,6 +29,7 @@
         android:drawableLeft="@drawable/ic_security"
         android:padding="5dp"
         android:drawablePadding="10dp"
+        android:textColor="#FFFFFF"
         android:id="@+id/passwordInput"
         android:background="@drawable/custom_main_edit_text"
         android:hint="비밀번호"
@@ -36,12 +38,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp" />
     <Button
+        android:id="@+id/loginButton"
+        android:onClick="Btn_OnClick_Intent"
         android:layout_width="130dp"
         android:layout_height="55dp"
         android:text="로그인"
         android:textColor="@android:color/white"
         android:background="@drawable/custom_login_button"
-        android:id="@+id/loginButton"
         android:textAllCaps="false"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/passwordInput"
@@ -49,12 +52,13 @@
         android:layout_marginStart="12dp" />
 
     <Button
+        android:id="@+id/signupButton"
+        android:onClick="Btn_OnClick_Intent"
         android:layout_width="130dp"
         android:layout_height="55dp"
         android:textColor="@android:color/white"
         android:text="회원가입"
         android:background="@drawable/custom_login_button"
-        android:id="@+id/signupButton"
         android:textAllCaps="false"
         android:layout_above="@+id/checkBox"
         android:layout_alignEnd="@+id/passwordInput"

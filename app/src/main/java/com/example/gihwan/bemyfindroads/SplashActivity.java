@@ -1,13 +1,22 @@
 package com.example.gihwan.bemyfindroads;
 
+import android.*;
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.gun0912.tedpermission.PermissionListener;
+import com.nhn.android.maps.opt.P;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,6 +42,7 @@ public class SplashActivity extends Activity{
         progressBar.setProgress(0);
         textView=(TextView)findViewById(R.id.textView);
         textView.setText("");
+
 
         timer=new Timer();
         timer.schedule(new TimerTask() {

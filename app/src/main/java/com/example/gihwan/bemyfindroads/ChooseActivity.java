@@ -67,8 +67,8 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
     private ChooseActivity mActivity;
     boolean askPermissionOnceAgain = false;
 
-     Button naviBus ;
-     Button naviStart ;
+    Button naviBus ;
+    Button naviStart ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

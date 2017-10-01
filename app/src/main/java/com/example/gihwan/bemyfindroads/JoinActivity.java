@@ -1,15 +1,19 @@
 package com.example.gihwan.bemyfindroads;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 
@@ -17,15 +21,107 @@ import java.util.ArrayList;
  * Created by user on 2017-05-03.
  */
 public class JoinActivity extends Activity {
-    Button joincancel = (Button) findViewById(R.id.btnCancel);
-    Button btndone = (Button) findViewById(R.id.btnDone);
-    EditText joinname = (EditText) findViewById(R.id.joinName);
-    Button idbutton = (Button) findViewById(R.id.idButton);
-    EditText idedit = (EditText) findViewById(R.id.idEdit);
-    Button passbutton = (Button) findViewById(R.id.passButton);
-    EditText etpassword = (EditText) findViewById(R.id.etPassword);
-    Intent i1;
-    SpeechRecognizer speech1;
+
+
+    EditText idedit, etpassword, etname;
+
+    EditText etaddress, etphonenumber, etresult;
+    EditText ettype, etgrade;
+    SpeechRecognizer sr;
+    DBManager dbManger;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_join);
+
+        dbManger = new DBManager(getApplicationContext(), "PERS_LIST.db", null, 1);
+
+        idedit = (EditText) findViewById(R.id.idEdit);      // 아이디 입력 EditText
+        etpassword = (EditText) findViewById(R.id.etPassword);
+        etname = (EditText) findViewById(R.id.joinName); // 가입자 이름
+
+        ettype = (EditText) findViewById(R.id.Type);
+        etgrade = (EditText) findViewById(R.id.Grade);
+
+        etaddress = (EditText) findViewById(R.id.Address);
+        etphonenumber = (EditText) findViewById(R.id.Phonenumber);
+        etresult = (EditText) findViewById(R.id.Result);
+
+        sr = SpeechRecognizer.createSpeechRecognizer(this); // SpeechRecognizer 초기화
+        sr.setRecognitionListener(listener);
+
+        //핸드폰 번호 가져오기
+        TelephonyManager telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(getApplicationContext().TELEPHONY_SERVICE);
+        String phoneNum = telephonyManager.getLine1Number();
+        if (phoneNum.startsWith("+82")) {
+            phoneNum = phoneNum.replace("+82", "0");
+        }
+        etphonenumber.setText(phoneNum);
+
+
+    }
+
+    public void Btn_Join_info(View v) {
+        switch (v.getId()) {
+            case R.id.btnCancel: //취소
+                Toast.makeText(getApplicationContext(), "취소되었습니다.", Toast.LENGTH_LONG).show();
+                finish();
+                break;
+            case R.id.btnDone:  // 회원가입 가입 버튼
+                dbManger.insert("insert into PERS_LIST values('" + idedit.getText().toString() + "', '" + etpassword.getText().toString() + "', '"
+                        + etname.getText().toString() + "', '" + ettype.getText().toString() + "', '" + etgrade.getText().toString() + "', '"
+                        + etaddress.getText().toString() + "', '" + etphonenumber.getText().toString() + "');");
+
+                etresult.setText(dbManger.PrintData());
+                Toast.makeText(getApplicationContext(), etname.getText().toString() + "님 환영합니다.", Toast.LENGTH_LONG).show();
+                idedit.setText(null);
+                etpassword.setText(null);
+                etname.setText(null);
+                ettype.setText(null);
+                etgrade.setText(null);
+                etaddress.setText(null);
+                etphonenumber.setText(null);
+                break;
+            case R.id.idButton: // 스피치
+                promptSpeechInput();
+                break;
+            case R.id.btnInfo:
+                etresult.setText(dbManger.PrintData());
+                break;
+        }
+
+    }
+
+    // STT 관련 소스 //
+    private void promptSpeechInput() {
+        Intent I_rec = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);            //intent 생성
+        I_rec.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        I_rec.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());    //호출한 패키지
+        I_rec.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");                            //음성인식 언어 설정
+        I_rec.putExtra(RecognizerIntent.EXTRA_PROMPT, "말을 하세요.");                     //사용자에게 보여 줄 글자
+
+        try {
+            startActivityForResult(I_rec, 1000);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(getApplicationContext(), "SPEECH를 지원하지 않습니다 ", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+            String key = RecognizerIntent.EXTRA_RESULTS;
+            ArrayList<String> mResult = data.getStringArrayListExtra(key);        //인식된 데이터 list 받아옴.
+            String[] result = new String[mResult.size()];            //배열생성. 다이얼로그에서 출력하기 위해
+            mResult.toArray(result);                                    //    list 배열로 변환
+
+            for (int i = 0; i < result.length; i++)
+                idedit.setText(result[i]);
+    }
+
     RecognitionListener listener = new RecognitionListener() {
 
         @Override
@@ -81,60 +177,4 @@ public class JoinActivity extends Activity {
 
         }
     };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_join);
-
-
-        joincancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "취소되었습니다.", Toast.LENGTH_LONG).show();
-                finish();
-            }
-        });
-        btndone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), joinname.getText().toString() + "님 환영합니다.", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        idbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);            //intent 생성
-                i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());    //호출한 패키지
-                i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");                            //음성인식 언어 설정
-                i.putExtra(RecognizerIntent.EXTRA_PROMPT, "말을 하세요.");                     //사용자에게 보여 줄 글자
-                startActivityForResult(i, 1000);
-
-            }
-        });
-        passbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1000) {
-            String key = RecognizerIntent.EXTRA_RESULTS;
-            ArrayList<String> mResult = data.getStringArrayListExtra(key);        //인식된 데이터 list 받아옴.다른 액티비티에서의 결과를 가져온다.
-            String[] result = new String[mResult.size()];            //배열생성. 다이얼로그에서 출력하기 위해
-            mResult.toArray(result);                                    //    list 배열로 변환
-
-            for (int i = 0; i < 1; i++) {
-                idedit.append(result[i] + "\n");
-            }
-        }
-    }
-
-
 }
