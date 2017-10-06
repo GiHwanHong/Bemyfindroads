@@ -46,7 +46,6 @@ public class JoinActivity extends Activity {
 
         etaddress = (EditText) findViewById(R.id.Address);
         etphonenumber = (EditText) findViewById(R.id.Phonenumber);
-        etresult = (EditText) findViewById(R.id.Result);
 
         sr = SpeechRecognizer.createSpeechRecognizer(this); // SpeechRecognizer 초기화
         sr.setRecognitionListener(listener);
@@ -86,9 +85,6 @@ public class JoinActivity extends Activity {
                 break;
             case R.id.idButton: // 스피치
                 promptSpeechInput();
-                break;
-            case R.id.btnInfo:
-                etresult.setText(dbManger.PrintData());
                 break;
         }
 
