@@ -67,8 +67,7 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
     private ChooseActivity mActivity;
     boolean askPermissionOnceAgain = false;
 
-    Button naviBus ;
-    Button naviStart ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,24 +80,25 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        naviBus = (Button)findViewById(R.id.naviBus);
-        naviBus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+
+    }
+    public void Btn_Choose(View v){
+        switch (v.getId()){
+            case R.id.naviBus:
                 Intent Gobus = new Intent(getApplicationContext(), BusActivity.class);
                 startActivity(Gobus);
-            }
-        });
-
-        naviStart = (Button) findViewById(R.id.naviStart);
-        naviStart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.naviStart:
                 Intent Gonavi = new Intent(getApplicationContext(), NaviActivity.class);
                 startActivity(Gonavi);
-            }
-        });
+                break;
+            case R.id.Administrator:  //회원정보 확인
+                Intent Administor = new Intent(getApplicationContext(), AdministratorActivity.class);
+                startActivity(Administor);
+                break;
 
+        }
     }
 
     @Override

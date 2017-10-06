@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 
@@ -70,11 +69,12 @@ public class JoinActivity extends Activity {
                 finish();
                 break;
             case R.id.btnDone:  // 회원가입 가입 버튼
-                dbManger.insert("insert into PERS_LIST values('" + idedit.getText().toString() + "', '" + etpassword.getText().toString() + "', '"
-                        + etname.getText().toString() + "', '" + ettype.getText().toString() + "', '" + etgrade.getText().toString() + "', '"
-                        + etaddress.getText().toString() + "', '" + etphonenumber.getText().toString() + "');");
+                dbManger.insert("insert into PERS_LIST values('"+idedit.getText().toString()+"', '"+
+                        etpassword.getText().toString()+"', '"+etname.getText().toString()+"', '"+
+                        ettype.getText().toString()+"', '"+etgrade.getText().toString()+ "', '"
+                        +etaddress.getText().toString()+"', '"+etphonenumber.getText().toString()+"');");
 
-                etresult.setText(dbManger.PrintData());
+                //etresult.setText(dbManger.PrintData());
                 Toast.makeText(getApplicationContext(), etname.getText().toString() + "님 환영합니다.", Toast.LENGTH_LONG).show();
                 idedit.setText(null);
                 etpassword.setText(null);

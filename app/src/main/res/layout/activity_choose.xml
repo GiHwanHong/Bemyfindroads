@@ -17,27 +17,54 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="4dp"
+        android:background="#388e3c"
+        />
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_weight="0.03"
+        android:background="#c8e6c9">
 
         <Button
             android:id="@+id/naviStart"
-            android:layout_width="150dp"
+            android:layout_width="100dp"
             android:layout_height="55dp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="30dp"
+            android:layout_toStartOf="@+id/naviBus"
+            android:gravity="center"
             android:text="길 안내"
+            android:onClick="Btn_Choose"
             android:textAllCaps="false" />
 
         <Button
             android:id="@+id/naviBus"
-            android:layout_width="150dp"
+            android:layout_width="100dp"
             android:layout_height="55dp"
-            android:layout_marginTop="30dp"
+            android:layout_alignBaseline="@+id/naviStart"
+            android:layout_alignBottom="@+id/naviStart"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
             android:text="버스"
+            android:onClick="Btn_Choose"
             android:textAllCaps="false" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/Administrator"
+            android:layout_width="100dp"
+            android:layout_height="55dp"
+            android:layout_alignBaseline="@+id/naviStart"
+            android:layout_alignBottom="@+id/naviStart"
+            android:layout_toEndOf="@+id/naviBus"
+            android:gravity="center"
+            android:text="회원정보"
+            android:onClick="Btn_Choose"
+            android:textAllCaps="false" />
+    </RelativeLayout>
 
 </LinearLayout>
