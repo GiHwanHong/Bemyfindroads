@@ -37,10 +37,17 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.kakao.kakaolink.*;
+
+import com.kakao.util.KakaoParameterException;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -52,10 +59,6 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    private GoogleApiClient mGoogleApiClient = null;
-    private GoogleMap mGoogleMap = null;
-    private Marker currentMarker = null;
-
     //디폴트 위치, Seoul
     private static final LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
     private static final String TAG = "googlemap_example";
@@ -63,11 +66,15 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2002;
     private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
     private static final int FASTEST_UPDATE_INTERVAL_MS = 1000; // 1초
-
-    private ChooseActivity mActivity;
+    final String stringImg = "http://k.kakaocdn.net/14/dn/btqch2ewVOS/1evWn4hcFAt9vEVq6sKIdk/o.jpg";
+    public String markerTitle;
+    public KakaoLink kakaolink; // 카카오톡 메신저를 사용하기 위함
     boolean askPermissionOnceAgain = false;
-
-
+    private GoogleApiClient mGoogleApiClient = null;
+    private GoogleMap mGoogleMap = null;
+    private Marker currentMarker = null;
+    private ChooseActivity mActivity;
+    private KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,22 +82,41 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
         setContentView(R.layout.activity_choose);
 
         mActivity = this;
-
+        final
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
-
-
+        try {
+            kakaolink = KakaoLink.getKakaoLink(ChooseActivity.this);
+            mapFragment.getMapAsync(this);
+        } catch (Exception e) {
+            Log.e("KaKao_Error : ", e.getMessage());
+        }
     }
-    public void Btn_Choose(View v){
-        switch (v.getId()){
+
+    public void Btn_Choose(View v) {
+        switch (v.getId()) {
             case R.id.naviBus:
                 Intent Gobus = new Intent(getApplicationContext(), BusActivity.class);
                 startActivity(Gobus);
                 break;
             case R.id.naviStart:
+                final KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder
+                        = kakaolink.createKakaoTalkLinkMessageBuilder();
                 Intent Gonavi = new Intent(getApplicationContext(), NaviActivity.class);
+                try {
+                    kakaoTalkLinkMessageBuilder
+                            .addText("현재위치는 : '" + markerTitle + "' 입니다") //링크 객체에 현재 위치 정보가 담긴 문자 넣기
+                            .addImage(stringImg, 155, 135)
+                            .addAppButton("위치를 지도로 보기");
+                } catch (KakaoParameterException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    kakaolink.sendMessage(kakaoTalkLinkMessageBuilder, this);   // 메시지 전송
+                } catch (KakaoParameterException e) {
+                    e.printStackTrace();
+                }
                 startActivity(Gonavi);
                 break;
             case R.id.Administrator:  //회원정보 확인
@@ -126,6 +152,7 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
             }
         }
     }
+
 
     @Override
     public void onPause() {
@@ -214,7 +241,7 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
     public void onLocationChanged(Location location) {
 
         Log.d(TAG, "onLocationChanged");
-        String markerTitle = getCurrentAddress(location);
+        markerTitle = getCurrentAddress(location);
         String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
                 + " 경도:" + String.valueOf(location.getLongitude());
 
@@ -369,6 +396,31 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
     }
 
 
+    //여기부터는 GPS 활성화를 위한 메소드들
+    private void showDialogForLocationServiceSetting() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ChooseActivity.this);
+        builder.setTitle("위치 서비스 비활성화");
+        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
+                + "위치 설정을 수정하실래요?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                Intent callGPSSettingIntent
+                        = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+        builder.create().show();
+    }
+
     //여기부터는 런타임 퍼미션 처리을 위한 메소드들
     @TargetApi(Build.VERSION_CODES.M)
     private void checkPermissions() {
@@ -393,10 +445,9 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
             }
 
             mGoogleMap.setMyLocationEnabled(true);
-
-
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int permsRequestCode,
                                            @NonNull String[] permissions,
@@ -412,15 +463,12 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
                 if (mGoogleApiClient == null) {
                     buildGoogleApiClient();
                 }
-
                 if (ActivityCompat.checkSelfPermission(this,
                         Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
 
                     mGoogleMap.setMyLocationEnabled(true);
                 }
-
-
             } else {
 
                 checkPermissions();
@@ -477,33 +525,6 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
         builder.create().show();
     }
 
-
-    //여기부터는 GPS 활성화를 위한 메소드들
-    private void showDialogForLocationServiceSetting() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ChooseActivity.this);
-        builder.setTitle("위치 서비스 비활성화");
-        builder.setMessage("앱을 사용하기 위해서는 위치 서비스가 필요합니다.\n"
-                + "위치 설정을 수정하실래요?");
-        builder.setCancelable(true);
-        builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                Intent callGPSSettingIntent
-                        = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivityForResult(callGPSSettingIntent, GPS_ENABLE_REQUEST_CODE);
-            }
-        });
-        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
-        builder.create().show();
-    }
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -544,5 +565,20 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
         //tts.setPitch((float) 0.1); //음량
         //tts.setSpeechRate((float) 0.5); //재생속도
         naviStartS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-    }*/
+    }
+
+    public class KakaoTalkMessageBuilder {
+        public Map<String, String> messageParams = new HashMap<String, String>();
+
+        public KakaoTalkMessageBuilder addParam(String key, String value) {
+            messageParams.put("${" + key + "}", value);
+            return this;
+        }
+
+        public Map<String, String> build() {
+            return messageParams;
+        }
+    }
+
+    */
 }

@@ -21,12 +21,11 @@ import static android.content.ContentValues.TAG;
 
 public class MainActivity extends Activity {
 
-    Button SignUpButton;
-    Button loginButton;
+    /*Button SignUpButton;
+    Button loginButton;*/
     EditText ID_user;
+    int flag = 0;
 
-
-    //DBManager dbManger;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,29 +34,41 @@ public class MainActivity extends Activity {
         boolean isGrantStorage = grantExternalStoragePermission();
 
         ID_user = (EditText) findViewById(R.id.IdInput);     //로그인 아이디 입력 EditText
-        SignUpButton = (Button) findViewById(R.id.signupButton); // 회원가입 버튼
-        loginButton = (Button) findViewById(R.id.loginButton);     // 로그인 버튼
-
-        //dbManger = new DBManager(getApplicationContext(), "PERS_LIST.db", null, 1);
+        /*SignUpButton = (Button) findViewById(R.id.signupButton); // 회원가입 버튼
+        loginButton = (Button) findViewById(R.id.loginButton);     // 로그인 버튼*/
 
         if (isGrantStorage) {
-            SignUpButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
-                    startActivity(intent);
-                }
-            });
-            loginButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), ChooseActivity.class);
-                    startActivity(intent);
-                    //String user = dbManger.select(ID_user);
-                    Toast.makeText(getApplicationContext(), "환영합니다", Toast.LENGTH_LONG).show();
-                }
-            });
+            flag = 0;
         } else {
+            flag = 1;
             Toast.makeText(this, "권한인식실패", Toast.LENGTH_SHORT).show();
+        }
+        /*
+
+        SignUpButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+            }
+        });
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
+
+    }
+    public void Btn_main(View v){
+        switch (v.getId()){
+            case R.id.signupButton:
+                Intent intent = new Intent(getApplicationContext(), JoinActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.loginButton:
+                Intent intent1 = new Intent(getApplicationContext(), ChooseActivity.class);
+                startActivity(intent1);
+                Toast.makeText(getApplicationContext(), "환영합니다", Toast.LENGTH_LONG).show();
+                break;
         }
     }
 

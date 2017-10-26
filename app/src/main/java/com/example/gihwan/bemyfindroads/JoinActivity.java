@@ -81,7 +81,6 @@ public class JoinActivity extends Activity {
                 ettype.setText(null);
                 etgrade.setText(null);
                 etaddress.setText(null);
-                etphonenumber.setText(null);
                 break;
             case R.id.idButton: // 스피치
                 promptSpeechInput();

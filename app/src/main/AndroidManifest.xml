@@ -39,9 +39,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
 
-                <!--<data android:scheme="@string/kakao_scheme"
-                    android:host="@string/kakaolink_host" /> -->
-
             </intent-filter>
         </activity>
 
@@ -63,6 +60,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="@string/kakao_scheme"
+                    android:host="@string/kakaolink_host" />
+
             </intent-filter>
         </activity>
         <activity android:name=".AdministratorActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
