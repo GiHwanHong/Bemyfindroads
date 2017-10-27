@@ -42,6 +42,7 @@ public class AdministratorActivity extends Activity {
         mHelper = new DBManager(getApplicationContext());
         cAdapter = new CustomAdapter(AdministratorActivity.this, R.layout.listview_item_customer,items);
         mListView.setAdapter(cAdapter);
+        
     }
 
     public void Btn_DBSelect(View v) {

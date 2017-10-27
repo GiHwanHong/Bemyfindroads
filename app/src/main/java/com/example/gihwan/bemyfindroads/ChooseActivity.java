@@ -61,7 +61,7 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
 
     //디폴트 위치, Seoul
     private static final LatLng DEFAULT_LOCATION = new LatLng(37.56, 126.97);
-    private static final String TAG = "googlemap_example";
+    private static final String TAG = "GoogleMap";
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2002;
     private static final int UPDATE_INTERVAL_MS = 1000;  // 1초
@@ -134,25 +134,6 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
         //if (mGoogleApiClient != null)
         // mGoogleApiClient.connect();
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (mGoogleApiClient != null)
-            mGoogleApiClient.connect();
-
-        //앱 정보에서 퍼미션을 허가했는지를 다시 검사해봐야 한다.
-        if (askPermissionOnceAgain) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                askPermissionOnceAgain = false;
-
-                checkPermissions();
-            }
-        }
-    }
-
 
     @Override
     public void onPause() {
@@ -373,7 +354,7 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(currentLocation);
             markerOptions.title(markerTitle);
-            markerOptions.snippet(markerSnippet);
+            //markerOptions.snippet(markerSnippet);
             markerOptions.draggable(true);
             markerOptions.icon(BitmapDescriptorFactory
                     .defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
@@ -386,7 +367,7 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(DEFAULT_LOCATION);
         markerOptions.title(markerTitle);
-        markerOptions.snippet(markerSnippet);
+        //markerOptions.snippet(markerSnippet);
         markerOptions.draggable(true);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         currentMarker = mGoogleMap.addMarker(markerOptions);
@@ -416,110 +397,6 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
-            }
-        });
-        builder.create().show();
-    }
-
-    //여기부터는 런타임 퍼미션 처리을 위한 메소드들
-    @TargetApi(Build.VERSION_CODES.M)
-    private void checkPermissions() {
-        boolean fineLocationRationale = ActivityCompat
-                .shouldShowRequestPermissionRationale(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION);
-        int hasFineLocationPermission = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION);
-
-        if (hasFineLocationPermission == PackageManager
-                .PERMISSION_DENIED && fineLocationRationale)
-            showDialogForPermission("앱을 실행하려면 퍼미션을 허가하셔야합니다.");
-
-        else if (hasFineLocationPermission
-                == PackageManager.PERMISSION_DENIED && !fineLocationRationale) {
-            showDialogForPermissionSetting("퍼미션 거부 + Don't ask again(다시 묻지 않음) " +
-                    "체크 박스를 설정한 경우로 설정에서 퍼미션 허가해야합니다.");
-        } else if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED) {
-
-            if (mGoogleApiClient == null) {
-                buildGoogleApiClient();
-            }
-
-            mGoogleMap.setMyLocationEnabled(true);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int permsRequestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-
-        if (permsRequestCode
-                == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION && grantResults.length > 0) {
-
-            boolean permissionAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-
-            if (permissionAccepted) {
-
-                if (mGoogleApiClient == null) {
-                    buildGoogleApiClient();
-                }
-                if (ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-
-                    mGoogleMap.setMyLocationEnabled(true);
-                }
-            } else {
-
-                checkPermissions();
-            }
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private void showDialogForPermission(String msg) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ChooseActivity.this);
-        builder.setTitle("알림");
-        builder.setMessage(msg);
-        builder.setCancelable(false);
-        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                ActivityCompat.requestPermissions(mActivity,
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                        PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-            }
-        });
-
-        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                finish();
-            }
-        });
-        builder.create().show();
-    }
-
-    private void showDialogForPermissionSetting(String msg) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(ChooseActivity.this);
-        builder.setTitle("알림");
-        builder.setMessage(msg);
-        builder.setCancelable(true);
-        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-
-                askPermissionOnceAgain = true;
-
-                Intent myAppSettings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                        Uri.parse("package:" + mActivity.getPackageName()));
-                myAppSettings.addCategory(Intent.CATEGORY_DEFAULT);
-                myAppSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mActivity.startActivity(myAppSettings);
-            }
-        });
-        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                finish();
             }
         });
         builder.create().show();
@@ -555,10 +432,10 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
                     setCurrentLocation(null, "위치정보 가져올 수 없음",
                             "위치 퍼미션과 GPS 활성 요부 확인하세요");
                 }
-
                 break;
         }
     }
+}
 
     /*private void speakOutNow() {
         String text = "길안내를 시작합니다";
@@ -581,4 +458,3 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
     }
 
     */
-}

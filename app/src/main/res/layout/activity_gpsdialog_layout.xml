@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="30dp">
+
+    <ImageView
+        android:id="@+id/custom_dialogicon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/dialogloc"/>
+    <TextView
+        android:id="@+id/customtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="무선 네트워크 사용 , GPS 위성 사용을 모두 체크 하셔야 정확한 위치 서비스가 가능합니다\n위치 서비스 기능을 설정하시겠습니까?"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/custom_dialogicon" />
+</RelativeLayout>
