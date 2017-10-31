@@ -42,7 +42,6 @@ public class AdministratorActivity extends Activity {
     private CustomAdapter cAdapter;
     private CustomItem c0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

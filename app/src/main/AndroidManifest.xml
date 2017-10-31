@@ -56,6 +56,7 @@
 
         </activity>
         <activity android:name=".JoinActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
+        <activity android:name=".AdselectActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
         <activity android:name=".ChooseActivity" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
