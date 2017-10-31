@@ -35,13 +35,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="아이디는 12자이내로 입력해주세요"
-        android:textColor="#000000" />
+        android:textColor="#F0F4C3"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:gravity="center"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:gravity="center">
 
         <EditText
             android:id="@+id/idEdit"
@@ -72,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="비밀번호는 10자이내로 입력해주세요"
-        android:textColor="#000000" />
+        android:textColor="#212121" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -164,8 +165,8 @@
             android:layout_height="60dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:gravity="left|center"
             android:background="@drawable/custom_join_edit_text"
+            android:gravity="left|center"
             android:maxLength="20"
             android:padding="10dp"
             android:text="주소"
@@ -186,8 +187,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:gravity="left|center"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:gravity="left|center">
 
         <TextView
             android:id="@+id/textView2"
