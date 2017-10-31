@@ -22,7 +22,6 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.content.ContentValues.TAG;
 
-
 public class MainActivity extends Activity {
 
 

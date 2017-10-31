@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Be my find roads</string>
+    <string name="type">장애유형</string>
 </resources>

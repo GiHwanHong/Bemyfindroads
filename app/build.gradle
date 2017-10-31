@@ -34,8 +34,9 @@ dependencies {
 
 
     compile 'gun0912.ted:tedpermission:2.0.3'
-
+    'com.amazonaws : aws-android-sdk-mobileanalytics : 2.3. +'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile group: project.KAKAO_SDK_GROUP, name: 'kakaolink', version: project.KAKAO_SDK_VERSION    //kakao_link
     compile group: project.KAKAO_SDK_GROUP, name: 'kakaotalk', version: project.KAKAO_SDK_VERSION    //kakao_talk
+
 }

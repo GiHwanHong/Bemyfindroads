@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="type">
+        <item>시각장애</item>
+        <item>청각장애</item>
+        <item>지체장애</item>
+    </string-array>
+</resources>

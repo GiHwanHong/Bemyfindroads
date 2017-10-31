@@ -1,181 +1,244 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/join"
     android:gravity="center"
-    android:background="@drawable/join">
-    <LinearLayout
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+    <TextView
+        android:gravity="center"
+        android:textSize="15dp"
+        android:id="@+id/jointitle"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="22dp"
+        android:text="회원 가입을 해주세요"
+        android:textColor="#ffffff" />
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/jointitle"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="14dp"
+        android:background="@color/com_kakao_button_background_press" />
+    </RelativeLayout>
+    <TextView
+        android:layout_height="20dp"
+        android:layout_width="match_parent"
+        android:text="아이디는 12자이내로 입력해주세요"
+        android:textColor="#000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_weight="1">
 
         <EditText
             android:id="@+id/idEdit"
-            android:background="@drawable/custom_join_edit_text"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_above="@+id/textView4"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="14dp"
+            android:layout_toStartOf="@+id/idButton"
+            android:background="@drawable/custom_join_edit_text"
             android:ems="10"
-            android:padding="10dp"
             android:hint="아이디"
-            android:imeOptions="actionNext"
-            android:layout_weight="3"/>
-        <Button
-            android:id="@+id/idButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="Btn_Join_info"
-            android:text="입력"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/etPassword"
-            android:background="@drawable/custom_join_edit_text"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:padding="10dp"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:hint="비밀번호"
-            android:imeOptions="actionNext"
-            android:layout_weight="3"/>
-        <Button
-
-            android:id="@+id/passButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="입력"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/joinName"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:background="@drawable/custom_join_edit_text"
-            android:imeOptions="actionNext"
-            android:padding="10dp"
-            android:hint="이름"
-            android:layout_weight="3"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/nameButton"
-            android:text="입력"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/Type"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:background="@drawable/custom_join_edit_text"
-            android:hint="장애유형"
+            android:maxLength="12"
+            android:textColor="#ffffff"
             android:imeOptions="actionNext"
             android:padding="10dp" />
 
         <Button
-            android:layout_width="80dp"
+            android:id="@+id/idButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/handiButton"
-            android:text="입력"/>
+            android:layout_above="@+id/textView4"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/nameButton"
+            android:layout_toEndOf="@+id/etPassword"
+
+            android:text="입력" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/etPassword"
+        android:layout_alignParentStart="true"
+        android:text="비밀번호는 10자이내로 입력해주세요"
+        android:textColor="#000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_weight="1"
+        android:weightSum="1">
+
+
         <EditText
-            android:id="@+id/Grade"
-            android:inputType="number"
+            android:id="@+id/etPassword"
+            android:layout_width="226dp"
+            android:layout_height="45dp"
+            android:layout_above="@+id/Type"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="0.08"
             android:background="@drawable/custom_join_edit_text"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:padding="10dp"
+            android:ems="10"
+            android:hint="비밀번호"
+            android:textColor="#ffffff"
             android:imeOptions="actionNext"
-            android:hint="장애등급" />
-        <Button
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/handigraButton"
-            android:text="입력"/>
+            android:inputType="textPassword"
+            android:maxLength="11"
+            android:padding="10dp" />
     </LinearLayout>
 
     <LinearLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/Address"
-            android:background="@drawable/custom_join_edit_text"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
             android:layout_weight="3"
-            android:padding="10dp"
-            android:hint="주소"
-            android:imeOptions="actionNext" />
+            android:id="@+id/joinName"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_above="@+id/idEdit"
+            android:layout_alignEnd="@+id/idEdit"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="11dp"
+            android:layout_toStartOf="@+id/btnCancel"
+            android:background="@drawable/custom_join_edit_text"
+            android:hint="이름"
+            android:padding="10dp" />
 
         <Button
-            android:id="@+id/addButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/nameButton"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/joinName"
+            android:onClick="Btn_Join_info"
             android:text="입력" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
 
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/Type"
+            android:paddingRight="5dp"
+            android:layout_weight="0.76"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_join_edit_text"
+            android:hint="장애유형"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/Grade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="0.99"
+            android:background="@drawable/custom_join_edit_text"
+            android:maxLength="1"
+            android:hint="장애등급"
+            android:inputType="number"
+            android:padding="10dp"
+            android:paddingLeft="5dp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/Address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/custom_join_edit_text"
+        android:hint="주소"
+        android:imeOptions="actionNext"
+        android:padding="10dp" />
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="60dp"
+            android:layout_width="100dp"
             android:layout_height="48dp"
-            android:layout_weight="1"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/Phonenumber"
             android:background="@drawable/custom_edit_text"
             android:gravity="center"
             android:text="연락처 "
             android:textColor="#212121"
             android:textSize="14dp" />
+
         <EditText
             android:id="@+id/Phonenumber"
-            android:background="@drawable/custom_join_edit_text"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
+            android:layout_above="@+id/btnDone"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="24dp"
+            android:textColor="#ffffff"
+            android:background="@drawable/custom_join_edit_text"
             android:ems="10"
-            android:maxLength="11"
-            android:padding="10dp"
             android:gravity="center"
             android:hint="핸드폰번호"
-            android:layout_weight="1"/>
-
+            android:maxLength="11"
+            android:padding="10dp" />
     </LinearLayout>
 
+
+
     <LinearLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <Button
             android:id="@+id/btnDone"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.69"
+            android:layout_above="@+id/textView_db_result"
+            android:layout_alignParentStart="true"
             android:onClick="Btn_Join_info"
             android:text="가입" />
 
         <Button
             android:id="@+id/btnCancel"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0.84"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/textView_db_result"
+            android:layout_alignParentEnd="true"
             android:onClick="Btn_Join_info"
             android:text="취소" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView_db_result"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:text="REsult" />
 </LinearLayout>
