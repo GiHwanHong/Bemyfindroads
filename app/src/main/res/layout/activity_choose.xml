@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1.93">
         <fragment
             android:id="@+id/map"
             android:layout_width="match_parent"
@@ -27,44 +27,52 @@
 
         android:layout_width="match_parent"
         android:layout_height="58dp"
-        android:layout_weight="0.03"
+        android:layout_weight="0.07"
         android:background="#c8e6c9">
 
         <Button
             android:id="@+id/naviStart"
             android:layout_width="100dp"
             android:layout_height="55dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="40dp"
-            android:layout_toStartOf="@+id/naviBus"
-            android:gravity="center"
-            android:text="길 안내"
+            android:background="@drawable/custom_login_button"
             android:onClick="Btn_Choose"
-            android:textAllCaps="false" />
+            android:text="길 안내"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="6dp"
+            android:layout_toStartOf="@+id/naviBus" />
 
         <Button
             android:id="@+id/naviBus"
             android:layout_width="100dp"
             android:layout_height="55dp"
-            android:layout_alignBaseline="@+id/naviStart"
-            android:layout_alignBottom="@+id/naviStart"
             android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="버스"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/custom_login_button"
             android:onClick="Btn_Choose"
-            android:textAllCaps="false" />
+            android:text="버스"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
 
         <Button
             android:id="@+id/Administrator"
             android:layout_width="100dp"
             android:layout_height="55dp"
-            android:layout_alignBaseline="@+id/naviStart"
-            android:layout_alignBottom="@+id/naviStart"
+            android:layout_marginTop="6dp"
             android:layout_toEndOf="@+id/naviBus"
+            android:background="@drawable/custom_login_button"
             android:gravity="center"
-            android:text="회원정보"
             android:onClick="Btn_Choose"
-            android:textAllCaps="false" />
+            android:text="회원정보"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
     </RelativeLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#388e3c"
+        />
 </LinearLayout>

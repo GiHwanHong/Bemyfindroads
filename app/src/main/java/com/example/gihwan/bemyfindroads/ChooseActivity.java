@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -70,7 +71,6 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
 
         mActivity = this;
         final MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);  // 맵에 뿌리는 것
-
         try {
             kakaolink = KakaoLink.getKakaoLink(ChooseActivity.this);
             mapFragment.getMapAsync(this);
@@ -156,7 +156,7 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
 
 
     @Override
-    public void onLocationChanged(Location location) {
+    public void onLocationChanged(Location location) {      // 마커에 정보를 처리하는 함수
 
         Log.d(TAG, "onLocationChanged");
         markerTitle = getCurrentAddress(location);
@@ -180,8 +180,9 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
     public void Btn_Choose(View v) {
         switch (v.getId()) {
             case R.id.naviBus:
-                Intent Gobus = new Intent(getApplicationContext(), BusActivity.class);
-                startActivity(Gobus);
+                String url = "daummaps://transitInfo?id=11030671004&type=busstop";
+                Intent in = new Intent(Intent.ACTION_VIEW , Uri.parse(url));
+                startActivity(in);
                 break;
             case R.id.naviStart:
                 final KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder
@@ -263,7 +264,7 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
     }
 
 
-    public String getCurrentAddress(Location location) {
+    public String getCurrentAddress(Location location) {      // 마커에 표시되는 주소를 처리하는 곳
 
         //지오코더... GPS를 주소로 변환
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -283,7 +284,6 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
         } catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
             return "잘못된 GPS 좌표";
-
         }
 
         if (addresses == null || addresses.size() == 0) {
@@ -292,6 +292,7 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
 
         } else {
             Address address = addresses.get(0);
+            
             return address.getAddressLine(0).toString();
         }
 
@@ -324,7 +325,7 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
                 {
                     Log.e("Inside","Click part");
                     LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());
-                    CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 20);
+                    CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 26);
                     mGoogleMap.animateCamera(update);
                     return false;
                 }

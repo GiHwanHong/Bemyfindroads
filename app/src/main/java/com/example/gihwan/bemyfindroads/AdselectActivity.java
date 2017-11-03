@@ -61,9 +61,14 @@ public class AdselectActivity extends Activity {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    result.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
-                    res = String.format("(%s) %s %s", arg1, arg2, arg3);
                     init_webView();
+                    result.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
+                    Log.e("arg1 : " , arg1);
+                    Log.e("arg2 : " , arg2);
+                    Log.e("arg3 : " , arg3);
+                    res = String.format("(%s) %s %s", arg1, arg2, arg3);
+                    Log.e("res : " , res);
+
                 }
             });
         }

@@ -25,9 +25,14 @@ import static android.content.ContentValues.TAG;
 public class MainActivity extends Activity {
 
 
-    EditText ID_user;
+    EditText ID_user, PW_user;
+
+    String user_id, user_pw;
+
     int flag = 0;
     LocationManager locationManager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +40,11 @@ public class MainActivity extends Activity {
         startActivity(new Intent(this, SplashActivity.class));
         boolean isGrantStorage = grantExternalStoragePermission();
 
-        ID_user = (EditText) findViewById(R.id.IdInput);     //로그인 아이디 입력 EditText
-        locationManager= (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+        ID_user = (EditText) findViewById(R.id.IdInput);     // 로그인 아이디 입력 EditText
+        PW_user = (EditText) findViewById(R.id.pInput);      //      패스워드 입력
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             alertCheckGPS();
         }
         if (isGrantStorage) {
@@ -45,14 +52,20 @@ public class MainActivity extends Activity {
         } else {
             flag = 1;
         }
+
+
     }
-    public void Btn_main(View v){
-        switch (v.getId()){
+
+    public void Btn_main(View v) {
+        switch (v.getId()) {
             case R.id.signupButton:
-                Intent SignupIntent = new Intent(getApplicationContext(), JoinActivity.class);
+                Intent SignupIntent = new Intent(getApplicationContext(), JoinActivity.class);        // 다음 창으로 이동
                 startActivity(SignupIntent);
                 break;
+
             case R.id.loginButton:
+                user_id = ID_user.getText().toString();
+                user_pw = PW_user.getText().toString();
                 Intent LoginIntent = new Intent(getApplicationContext(), ChooseActivity.class);
                 startActivity(LoginIntent);
                 Toast.makeText(getApplicationContext(), "환영합니다", Toast.LENGTH_LONG).show();
@@ -66,7 +79,7 @@ public class MainActivity extends Activity {
         LayoutInflater inflater = getLayoutInflater();
         builder.setMessage("위치 서비스 설정")
                 .setCancelable(false)  // 뒤로 버튼 클릭시 취소 가능 설정
-                .setView(inflater.inflate(R.layout.activity_gpsdialog_layout,null))
+                .setView(inflater.inflate(R.layout.activity_gpsdialog_layout, null))
                 .setPositiveButton("GPS 키러 가기 ",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -119,5 +132,4 @@ public class MainActivity extends Activity {
             }
         }
     }
-
 }

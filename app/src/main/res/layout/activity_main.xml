@@ -1,77 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ImageView
+        android:id="@+id/back1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/back1"
         android:background="@drawable/login" />
+
     <EditText
         android:id="@+id/IdInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_alignStart="@+id/pInput"
+        android:layout_centerVertical="true"
         android:background="@drawable/custom_main_edit_text"
         android:drawableLeft="@drawable/ic_person"
-        android:padding="5dp"
         android:drawablePadding="10dp"
         android:hint="아이디"
-        android:textColor="#FFFFFF"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/passwordInput" />
-    <!-- 32x32 -->
+        android:inputType="text"
+        android:padding="5dp"
+        android:textColor="#FFFFFF" />
+
     <EditText
+        android:id="@+id/pInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:drawableLeft="@drawable/ic_security"
-        android:padding="5dp"
-        android:drawablePadding="10dp"
-        android:textColor="#FFFFFF"
-        android:id="@+id/passwordInput"
-        android:background="@drawable/custom_main_edit_text"
-        android:hint="비밀번호"
-        android:inputType="textPassword"
         android:layout_below="@+id/IdInput"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:background="@drawable/custom_main_edit_text"
+        android:drawableLeft="@drawable/ic_security"
+        android:drawablePadding="10dp"
+        android:hint="비밀번호"
+        android:inputType="textPassword"
+        android:padding="5dp"
+        android:textColor="#FFFFFF" />
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="130dp"
         android:layout_height="55dp"
-        android:text="로그인"
-        android:onClick="Btn_main"
-        android:textColor="@android:color/white"
-        android:background="@drawable/custom_login_button"
-        android:textAllCaps="false"
+        android:layout_alignStart="@+id/pInput"
+        android:layout_below="@+id/pInput"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/passwordInput"
-        android:layout_alignStart="@+id/passwordInput"
-        android:layout_marginStart="12dp" />
+        android:background="@drawable/custom_login_button"
+        android:onClick="Btn_main"
+        android:text="로그인"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
 
     <Button
         android:id="@+id/signupButton"
         android:layout_width="130dp"
         android:layout_height="55dp"
-        android:textColor="@android:color/white"
-        android:text="회원가입"
-        android:onClick="Btn_main"
-        android:background="@drawable/custom_login_button"
-        android:textAllCaps="false"
         android:layout_above="@+id/checkBox"
-        android:layout_alignEnd="@+id/passwordInput"
-        android:layout_marginEnd="12dp" />
+        android:layout_alignEnd="@+id/pInput"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/custom_login_button"
+        android:onClick="Btn_main"
+        android:text="회원가입"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white" />
 
     <CheckBox
+        android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그인 유지"
-        android:textColor="#c0ca33"
-        android:id="@+id/checkBox"
-        android:layout_marginTop="20dp"
         android:layout_below="@+id/loginButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="로그인 유지"
+        android:textColor="#c0ca33" />
 
 </RelativeLayout>

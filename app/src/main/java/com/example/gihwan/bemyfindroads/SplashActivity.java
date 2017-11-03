@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gun0912.tedpermission.PermissionListener;
-import com.nhn.android.maps.opt.P;
 
 import java.util.ArrayList;
 import java.util.Timer;

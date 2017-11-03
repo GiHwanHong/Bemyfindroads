@@ -51,9 +51,10 @@
             android:background="@drawable/custom_join_edit_text"
             android:ems="10"
             android:hint="아이디"
-            android:imeOptions="actionNext"
+            android:inputType="text"
             android:maxLength="12"
             android:padding="10dp"
+            android:selectAllOnFocus="true"
             android:textColor="#ffffff" />
 
         <Button
@@ -62,6 +63,7 @@
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/custom_login_button"
+            android:onClick="Btn_Join_info"
             android:text="입력"
             android:textColor="#ffffff"
             android:textStyle="bold" />
@@ -92,6 +94,7 @@
             android:inputType="textPassword"
             android:maxLength="11"
             android:padding="10dp"
+            android:selectAllOnFocus="true"
             android:textColor="#ffffff" />
     </LinearLayout>
 
@@ -108,7 +111,10 @@
             android:layout_weight="3"
             android:background="@drawable/custom_join_edit_text"
             android:hint="이름"
-            android:padding="10dp" />
+            android:inputType="text"
+            android:padding="10dp"
+            android:maxLength="4"
+            android:selectAllOnFocus="true" />
 
         <Button
             android:id="@+id/nameButton"
@@ -129,28 +135,35 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/Type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/custom_join_edit_text"
+            android:completionThreshold="1"
             android:hint="장애유형"
+            android:nextFocusDown="@+id/Grade"
+            android:inputType="text"
+            android:maxLength="5"
             android:padding="10dp"
-            android:paddingRight="5dp" />
+            android:paddingRight="5dp"
+            android:selectAllOnFocus="true" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/Grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@drawable/custom_join_edit_text"
+            android:completionThreshold="1"
             android:hint="장애등급"
             android:inputType="number"
-            android:maxLength="1"
+            android:maxLength="2"
             android:padding="10dp"
-            android:paddingLeft="5dp" />
+            android:paddingLeft="5dp"
+            android:selectAllOnFocus="true" />
     </LinearLayout>
 
     <LinearLayout
@@ -169,7 +182,7 @@
             android:gravity="left|center"
             android:maxLength="20"
             android:padding="10dp"
-            android:text="주소"
+            android:text="버튼으로 주소입력!"
             android:textColor="#ffffff"
             android:textSize="18dp" />
 
@@ -197,8 +210,7 @@
             android:background="@drawable/custom_edit_text"
             android:gravity="center"
             android:text="연락처 "
-
-            android:textColor="#212121"
+            android:textColor="@color/com_kakao_button_background_press"
             android:textSize="14dp" />
 
         <EditText
@@ -210,9 +222,44 @@
             android:ems="10"
             android:gravity="center"
             android:hint="핸드폰번호"
-            android:maxLength="11"
+            android:inputType="phone"
+            android:maxLength="15"
             android:padding="10dp"
             android:textColor="#ffffff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:gravity="left|center">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/custom_edit_text"
+            android:gravity="center"
+            android:text="보호자 연락처 "
+            android:textColor="@color/com_kakao_button_background_press"
+            android:textSize="14dp" />
+
+        <EditText
+            android:id="@+id/parentnumber"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/custom_join_edit_text"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="핸드폰번호"
+            android:inputType="phone"
+            android:maxLength="13"
+            android:padding="10dp"
+            android:selectAllOnFocus="true"
+            android:textColor="#ffffff" />
+
     </LinearLayout>
 
 
@@ -254,5 +301,5 @@
         android:layout_height="20dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:text="REsult" />
+        android:text="SQL 처리 메시지 " />
 </LinearLayout>
