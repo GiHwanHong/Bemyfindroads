@@ -147,7 +147,6 @@ public class JoinActivity extends Activity {
                 Intent in_getData = new Intent(JoinActivity.this, AdselectActivity.class);
                 startActivityForResult(in_getData, 0);
                 break;
-
         }
 
     }
@@ -169,7 +168,6 @@ public class JoinActivity extends Activity {
         switch (requestCode) {       // startActivityForResult에서 넘긴 값을 처리하기 위함
             case 0:                 // Daum에서 받은 주소 값을 받기 위함.
                 if (resultCode == RESULT_OK) {
-
                     str = intent.getStringExtra("address");
                     Log.e("잘 받았어 고마워 : ", str);
                     etaddress.setText(str);

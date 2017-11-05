@@ -1,56 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_choooose"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1.93">
+        android:layout_weight="4">
+
         <fragment
             android:id="@+id/map"
+            class="com.google.android.gms.maps.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            class="com.google.android.gms.maps.MapFragment"/>
-
+            android:layout_height="match_parent" />
     </LinearLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:background="#388e3c"
-        />
-
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#388e3c" />
     <RelativeLayout
-
         android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:layout_weight="0.07"
-        android:background="#c8e6c9">
+        android:layout_height="160dp"
+        android:background="#c8e6c9"
+        android:layout_weight="1">
 
         <Button
             android:id="@+id/naviStart"
             android:layout_width="100dp"
-            android:layout_height="55dp"
+            android:layout_height="52dp"
             android:background="@drawable/custom_login_button"
             android:onClick="Btn_Choose"
             android:text="길 안내"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="50dp"
             android:layout_toStartOf="@+id/naviBus" />
 
         <Button
             android:id="@+id/naviBus"
             android:layout_width="100dp"
-            android:layout_height="55dp"
+            android:layout_height="52dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="6dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="6dp"
             android:background="@drawable/custom_login_button"
             android:onClick="Btn_Choose"
             android:text="버스"
@@ -60,7 +58,7 @@
         <Button
             android:id="@+id/Administrator"
             android:layout_width="100dp"
-            android:layout_height="55dp"
+            android:layout_height="52dp"
             android:layout_marginTop="6dp"
             android:layout_toEndOf="@+id/naviBus"
             android:background="@drawable/custom_login_button"
@@ -69,10 +67,38 @@
             android:text="회원정보"
             android:textAllCaps="false"
             android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/Callparent"
+            android:layout_width="100dp"
+            android:layout_height="52dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/naviStart"
+            android:background="@drawable/custom_login_button"
+            android:gravity="center"
+            android:onClick="Btn_Choose"
+            android:text="보호자에게연락"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/ResultCnt"
+            android:layout_width="150dp"
+            android:layout_height="52dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/naviBus"
+            android:background="@drawable/custom_login_button"
+            android:gravity="center"
+            android:onClick="Btn_Choose"
+            android:text="오늘의 위험횟수"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF" />
+
+
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
-        android:background="#388e3c"
-        />
+        android:background="#388e3c" />
 </LinearLayout>

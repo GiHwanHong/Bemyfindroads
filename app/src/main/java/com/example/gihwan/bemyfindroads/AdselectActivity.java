@@ -77,9 +77,9 @@ public class AdselectActivity extends Activity {
     public void webDatasend(View v) {
         switch (v.getId()) {
             case R.id.sendData:
-                Intent in_send = new Intent(AdselectActivity.this, MainActivity.class);
+                Intent in_send = new Intent(AdselectActivity.this, JoinActivity.class);
                 in_send.putExtra("address", res);
-                Log.e("결과 값을 보낼께 : ", res);
+                Log.e("주소 값을 보낼께 : ", res);
                 setResult(RESULT_OK,in_send);
                 finish();
                 break;

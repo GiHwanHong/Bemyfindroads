@@ -2,6 +2,8 @@ package com.example.gihwan.bemyfindroads;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -10,6 +12,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -60,15 +63,16 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
     private Marker currentMarker = null;
     private ChooseActivity mActivity;
     public String markerTitle;
+    String str = null;
 
     public KakaoLink kakaolink; // 카카오톡 메신저를 사용하기 위함
     final String stringImg = "http://k.kakaocdn.net/14/dn/btqch2ewVOS/1evWn4hcFAt9vEVq6sKIdk/o.jpg"; // 메시지와 함께 같이 전송되는 이미지
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
-
         mActivity = this;
         final MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);  // 맵에 뿌리는 것
         try {
@@ -121,6 +125,14 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
         mGoogleMap.getUiSettings().setCompassEnabled(true);
         mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(DEFAULT_LOCATION);
+        markerOptions.title("서울");
+        markerOptions.snippet("수도");
+        mGoogleMap.addMarker(markerOptions);
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(DEFAULT_LOCATION));
+        mGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             //API 23 이상이면 런타임 퍼미션 처리 필요
 
@@ -170,45 +182,12 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
     protected synchronized void buildGoogleApiClient() {
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                         .addConnectionCallbacks(this)
+                .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
 
-    }
-    public void Btn_Choose(View v) {
-        switch (v.getId()) {
-            case R.id.naviBus:
-                String url = "daummaps://transitInfo?id=11030671004&type=busstop";
-                Intent in = new Intent(Intent.ACTION_VIEW , Uri.parse(url));
-                startActivity(in);
-                break;
-            case R.id.naviStart:
-                final KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder
-                        = kakaolink.createKakaoTalkLinkMessageBuilder();
-                Intent Gonavi = new Intent(getApplicationContext(), NaviActivity.class);
-                try {
-                    kakaoTalkLinkMessageBuilder
-                            .addText("현재위치는 \n -> '" + markerTitle + "' 입니다") //링크 객체에 현재 위치 정보가 담긴 문자 넣기
-                            .addImage(stringImg, 155, 135)
-                            .addAppButton("위치를 지도로 보기");
-                } catch (KakaoParameterException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    kakaolink.sendMessage(kakaoTalkLinkMessageBuilder, this);   // 메시지 전송
-                } catch (KakaoParameterException e) {
-                    e.printStackTrace();
-                }
-                startActivity(Gonavi);
-                break;
-            case R.id.Administrator:  //회원정보 확인
-                Intent Administor = new Intent(getApplicationContext(), AdministratorActivity.class);
-                startActivity(Administor);
-                break;
-
-        }
     }
 
     @Override
@@ -221,14 +200,12 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
         locationRequest.setInterval(UPDATE_INTERVAL_MS);
         locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_MS);
 
-
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED) {
 
-                LocationServices.FusedLocationApi
-                        .requestLocationUpdates(mGoogleApiClient, locationRequest, this);
 
             }
         } else {
@@ -292,7 +269,7 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
 
         } else {
             Address address = addresses.get(0);
-            
+
             return address.getAddressLine(0).toString();
         }
 
@@ -318,13 +295,11 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
 
             //오른쪽 상단에 gps_icon을 클릭하게 되면 밑의 코드가 실행 된다
-            mGoogleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener()
-            {
+            mGoogleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
                 @Override
-                public boolean onMyLocationButtonClick()
-                {
-                    Log.e("Inside","Click part");
-                    LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());
+                public boolean onMyLocationButtonClick() {
+                    Log.e("Inside", "Click part");
+                    LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
                     CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, 26);
                     mGoogleMap.animateCamera(update);
                     return false;
@@ -342,5 +317,67 @@ public class ChooseActivity extends Activity implements OnMapReadyCallback,
         currentMarker = mGoogleMap.addMarker(markerOptions);
 
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(DEFAULT_LOCATION));
+    }
+
+    public void Btn_Choose(View v) {
+
+        switch (v.getId()) {
+            case R.id.naviBus:
+                //String Bus_url = "daummaps://transitInfo?id=11030671004&type=busstop&busStopName=강남대역.강남대입구";
+                String Bus_url = "daummaps://transitInfo?id=11030671004&type=busstop&busStopName=순천향대학병원";
+                Intent Bus_intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Bus_url));
+                startActivity(Bus_intent);
+                break;
+            case R.id.naviStart:
+                String Road_url = "daummaps://route?sp=37.275657,127.11594400000001&ep=37.2770729,127.1341291&by=FOOT";
+                Intent Road_intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Road_url));
+
+
+                final KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder
+                        = kakaolink.createKakaoTalkLinkMessageBuilder();
+                //Intent Gonavi = new Intent(getApplicationContext(), NaviActivity.class);
+                try {
+                    kakaoTalkLinkMessageBuilder
+                            .addText("현재위치는 \n -> '" + markerTitle + "' 입니다") //링크 객체에 현재 위치 정보가 담긴 문자 넣기
+                            .addImage(stringImg, 155, 135)
+                            .addAppLink("위치를 지도로 보기");
+                } catch (KakaoParameterException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    kakaolink.sendMessage(kakaoTalkLinkMessageBuilder, this);   // 메시지 전송
+                } catch (KakaoParameterException e) {
+                    e.printStackTrace();
+                }
+                //startActivity(Gonavi);
+                startActivity(Road_intent);
+                break;
+            case R.id.Administrator:  //회원정보 확인
+                Intent Administor = new Intent(getApplicationContext(), AdministratorActivity.class);
+                startActivity(Administor);
+                break;
+            case R.id.ResultCnt: // 위험 횟수 파악하기
+                //Intent DangerCount = new Intent(getApplicationContext(), DangerSensorDataActivity.class);
+                startActivity(new Intent (this, DangerSensorDataActivity.class));
+                break;
+            case R.id.Callparent: //보호자에게 연락하기
+                new AlertDialog.Builder(ChooseActivity.this)
+                        .setTitle("보호자에게 전화를 걸까요?")
+                        .setMessage("010-2262-7458")
+                        .setPositiveButton("확인 ", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent_call = new Intent(Intent.ACTION_CALL, Uri.fromParts("tel", "010-2262-7458", null));
+                                try {
+                                    startActivity(intent_call);
+                                } catch (Exception e) {
+                                    Log.e("107 Error : ", e.getMessage());
+                                }
+                            }
+                        })
+                        .setNegativeButton("취소", null)
+                        .show();
+                break;
+        }
     }
 }
