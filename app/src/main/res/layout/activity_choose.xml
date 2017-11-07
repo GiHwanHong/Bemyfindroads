@@ -90,7 +90,7 @@
             android:background="@drawable/custom_login_button"
             android:gravity="center"
             android:onClick="Btn_Choose"
-            android:text="오늘의 위험횟수"
+            android:text="오늘의 위험"
             android:textAllCaps="false"
             android:textColor="#FFFFFF" />
 

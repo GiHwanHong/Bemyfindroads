@@ -141,7 +141,7 @@ public class JoinActivity extends Activity {
                 promptSpeechInput();
                 break;
             case R.id.nameButton: // 스피치(Speech To Text)
-                promptSpeechInput();
+                promptSpeechInput1();
                 break;
             case R.id.inAddress:  // Daum 주소를 얻기위해 이동하기
                 Intent in_getData = new Intent(JoinActivity.this, AdselectActivity.class);
@@ -151,7 +151,7 @@ public class JoinActivity extends Activity {
 
     }
 
-    /// Speech To Text 부분 ///
+    /// Speech To Text 부분 - 아이디///
     private void promptSpeechInput() {
         Intent I_rec = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);            //intent 생성
         I_rec.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
@@ -159,7 +159,15 @@ public class JoinActivity extends Activity {
         I_rec.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");                            //음성인식 언어 설정
         I_rec.putExtra(RecognizerIntent.EXTRA_PROMPT, "말을 하세요.");                     //사용자에게 보여 줄 글자
         startActivityForResult(I_rec, 1);
-
+    }
+    /// Speech To Text 부분 - 이름 Edittext///
+    private void promptSpeechInput1() {
+        Intent I_rec = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);            //intent 생성
+        I_rec.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+        I_rec.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());    //호출한 패키지
+        I_rec.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");                            //음성인식 언어 설정
+        I_rec.putExtra(RecognizerIntent.EXTRA_PROMPT, "말을 하세요.");                     //사용자에게 보여 줄 글자
+        startActivityForResult(I_rec, 2);
     }
 
     @Override
@@ -177,8 +185,16 @@ public class JoinActivity extends Activity {
                 ArrayList<String> mResult = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);        //인식된 데이터 list 받아옴.
                 String result = mResult.get(0);            //배열생성. 다이얼로그에서 출력하기 위해
                 Log.e("Speech : ", mResult.get(0));
-                //etname.setText(result);
+                idedit.setText(result);
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+                break;
+            case 2:
+                ArrayList<String> mResult1 = intent.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);        //인식된 데이터 list 받아옴.
+                String result1 = mResult1.get(0);            //배열생성. 다이얼로그에서 출력하기 위해
+                Log.e("Speech : ", mResult1.get(0));
+                etname.setText(result1);
+                Toast.makeText(getApplicationContext(), result1, Toast.LENGTH_LONG).show();
+                break;
         }
         super.onActivityResult(requestCode, resultCode, intent);
     }
